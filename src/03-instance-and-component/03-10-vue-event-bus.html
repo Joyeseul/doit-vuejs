@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Event Bus Sample</title>
+</head>
+<body>
+    <div id="app">
+        <child-component></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+        /* 1. 이벤트버스로 활용할 새 Vue 인스턴스를 생성하고 eventBus 라는 변수에 참조한다. */
+        let eventBus = new Vue();
+
+        Vue.component('child-component', {
+            /* 2. template 속성에는 show 버튼을 만들고, "showLog"와 연결시킨다.
+            *   methods 속성에는 showLog() 메소드를 정의하고 이벤트를 발생시키는 로직을 추가한다 */
+            template: '<div>하위컴포넌트 영역입니다.<button v-on:click="showLog">show</button></div>',
+            methods: {
+                showLog: function () {
+                    eventBus.$emit('triggerEventBus', 100);
+                }
+            }
+        });
+
+        let app = new Vue({
+            el: "#app",
+            created: function () {
+                /* 3. 상위 컴포넌트의 created 라이프 사이클 훅에 eventBus.$on()으로
+                *   이벤트를 받는 로직을 선언한다. */
+                eventBus.$on('triggerEventBus', function (value) {
+                    console.log("이벤트 버스를 통해 전달 받음. 전달받은 값 : ", value);
+                })
+            }
+        });
+    </script>
+</body>
+</html>

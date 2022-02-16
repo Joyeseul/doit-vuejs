@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Props Sample</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 4. 상위컴포넌트의 message 속성값인 'Hello Vue! passed ~~~' 텍스트를
+                하위 컴포넌트의 propsdata 로 전달 -->
+        <child-component v-bind:propsdata="message"></child-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+        /* 2. 하위컴포넌트인 'child-component' 등록 */
+        Vue.component('child-component', {
+            /* 3. 내용으로 props 속성에 propsdata 를 정의 */
+            props: ['propsdata'],
+            /* 5. 이제 propsdata 는 상위컴포넌트의 message 속성값이 됨 */
+            template: '<p>{{ propsdata }}</p>',
+        });
+
+        /* 1. Vue 인스턴스 생성 */
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue! passed from Parent Component'
+            }
+        });
+
+        /* 이때 딱히 상위 컴포넌트를 지정하지 않았다.
+        * 그럼에도 Vue 인스턴스안에 마치 상위 컴포넌트가 존재하는 것처럼 하위 컴포넌트로 props를 내려
+        * 보냄.
+        * 왜냐하면 컴포넌트를 등록함과 동시에 Vue 인스턴스 자체가 상위 컴포넌트가 되기 때문임 */
+    </script>
+</body>
+</html>
