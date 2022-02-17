@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Named View Sample</title>
+</head>
+<body>
+    <div id="app">
+        <router-view name="header"></router-view>
+        <router-view></router-view>     <!-- name 이 없을 시 디폴트 -->
+        <router-view name="footer"></router-view>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+    <script>
+        let Body = { template: '<div>This is Body</div>' };
+        let Header = { template: '<div>This is Header</div>' };
+        let Footer = { template: '<div>This is Footer</div>' };
+
+        /* <router-view>의 name 속성과 컴포넌트를 연결한다.
+        *   네스트 라우팅에서는 routes 와 그 안의 children 으로 정의했지만,
+        *   여기서는 바로 라우터를 적고 정보를 적어줌
+        *       주의! : component 라고 쓰지 않기. s 붙이기. */
+        let router = new VueRouter({
+            routes: [
+                {
+                    path: '/',
+                    components: {
+                        default: Body,
+                        header: Header,
+                        footer: Footer
+                    }
+                }
+            ]
+        });
+
+        let app = new Vue({
+            router
+        }).$mount('#app');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Nested Router</title>
+</head>
+<!-- 실행하고 첫 화면에는 아무것도 보이지 않으므로 코드를 브라우저에 실행하고 URL 값의 끝에 user나 user/posts 등을 입력하여 확인하면 됨-->
+<body>
+    <div id="app">
+        <!-- 1. UserComponent 가 뿌려질 영역-->
+        <router-view></router-view>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+    <script>
+        /* 2. 컴포넌트 내용을 정의 */
+        let User = {
+            template: '' +
+                '<div>' +
+                    'User Component' +
+                    '<router-view></router-view>' +
+                '</div>' +
+                ''
+        };
+        let UserProfile = { template: '<p>User Profile Component</p>' };
+        let UserPost = { template: '<p>User Post Component</p>' };
+
+        /* 3. 네스트 라우팅 정의.
+        *    children 값으로 담길 컴포넌트들을 적음 */
+        let routes = [
+            {
+                path: '/user',
+                component: User,
+                children: [
+                    {
+                        path: 'posts',
+                        component: UserPost
+                    },
+                    {
+                        path: 'profile',
+                        component: UserProfile
+                    },
+                ]
+            }
+        ];
+
+        /* 4. 뷰 라우터 정의 */
+        let router = new VueRouter({
+            routes
+        });
+
+        /* 5. 뷰 인스턴스에 라우터 추가 */
+        let app = new Vue({
+            router
+        }).$mount('#app');
+    </script>
+</body>
+</html>

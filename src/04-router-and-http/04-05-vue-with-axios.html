@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue With Axios Sample</title>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="getData">강아지 목록 가져오기</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                getData: function () {
+                    axios.get('https://dog.ceo/api/breeds/list/all')
+                        .then(function (response) {
+                            console.log(response);
+
+                            if(response.data.status === "success") {
+                                console.log(response.data.message);
+                                console.log('현재 강아지의 수는 ${Object.entries(response.data.message).length} 입니다.');
+                            }
+                        })
+                        .catch(error => console.log(error));
+                }
+            }
+        });
+
+
+        /* "Axios를 사용하여 HTTP요청하기" https://tuhbm.github.io/2019/03/21/axios/ 참조하여 만들어 봄.
+            Object에 대한 공부가 필요할 듯 */
+        const getBreeds = async () => {
+            try{
+                return await axios.get('https://dog.ceo/api/breeds/list/all');
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const countBreeds = async () => {
+            const breeds = await getBreeds();
+
+            if(breeds.data.message) {
+                console.log('현재 강아지의 수는 ${Object.entries(response.data.message).length} 입니다.');
+            }
+        };
+
+        countBreeds();
+    </script>
+
+</body>
+</html>
