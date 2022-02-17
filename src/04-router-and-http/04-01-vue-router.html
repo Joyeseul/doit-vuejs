@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Router Sample</title>
+</head>
+<body>
+    <div id="app">
+        <h1>뷰 라우터 예제</h1>
+        <p>
+            <!-- 1. router-link 는 URL 값을 변경하는 태그이다.
+                to='~' 내부 값이 브라우저 URL 끝에 추가된다. -->
+            <router-link to="/main">Main 컴포넌트로 이동</router-link>
+            <router-link to="/login">login 컴포넌트로 이동</router-link>
+        </p>
+        <!-- 2. router-view 는 URL 값에 따라 갱신되는 화면 영역이다.
+            해당 영역에 표시할 내용은 <script>에서 정의한다. -->
+        <router-view></router-view>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+    <script>
+        /* 3. Main, Login 컴포넌트 내용 정의 */
+        let Main = { template: '<div>main</div>' };
+        let Login = { template: '<div>login</div>'};
+
+        /* 4. 각 URL 에 해당하는 컴포넌트 등록 */
+        let routes = [
+            { path: '/main', component: Main },
+            { path: '/login', component: Login }
+        ]
+
+        /* 5. 뷰 라우터 정의 */
+        let router = new VueRouter({
+            /* url 끝의 해시 값(#)을 없애고 싶다면, 아래 각주를 해제하여 히스토리 모드를 켜면 된다. */
+            //mode: 'history',
+            routes
+        });
+
+        /* 6. 뷰 라우터를 인스턴스에 등록
+        * .$mount()는 el 속성과 같이 인스턴스를 화면에 붙여주는 역할을 한다. */
+        let app = new Vue({
+            router
+        }).$mount('#app');
+
+    </script>
+
+</body>
+</html>
