@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <title>Vue Template - Directives</title>
+    </head>
+<body>
+    <div id="app">
+        <a v-if="flag">두잇 Vue.js</a>
+        <ul>
+            <li v-for="system in systems">{{ system }}</li>
+        </ul>
+        <p v-show="flag">두잇 Vue.js</p>
+        <h5 v-bind:id="uid">뷰 입문서</h5>
+        <button v-on:click="popupAlert">경고 창 버튼</button>
+        <br><br>
+        <button v-on:click="changeFlag">flag 값 변경</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                flag: true,
+                systems: ['android', 'ios', 'windows'],
+                uid: 10
+            },
+            methods: {
+                popupAlert: function () {
+                    return alert("경고 창 표시");
+                },
+                changeFlag: function () {
+                    /* this를 사용하면 컴포넌트 인스턴스를 참조할 수 있다.
+                    *   그리고 data는 $data로 받아올 수 있는데, 나중에는 data를 함수형으로 작성하는 게 좋다고 함.
+                    *   https://heewon26.tistory.com/223 */
+                    this.$data.flag = !this.$data.flag;
+
+                    /* 아래 내용을 37번 줄 처럼 간단히 simplify 할 수 있다!!
+                    if(this.$data.flag) {
+                        this.$data.flag = false;
+                    } else {
+                        this.$data.flag = true;
+                    }
+                    */
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

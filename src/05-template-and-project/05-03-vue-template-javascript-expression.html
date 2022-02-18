@@ -6,12 +6,16 @@
 </head>
 <body>
     <div id="app">
-        {{ let a = 10; }}               <!-- X, 선언문은 사용 불가능 -->
-        {{ if (true) {return 100} }}    <!-- X, 분기 구문은 사용 불가능 -->
+        <!--
+        {{ let a = 10; }}               X, 선언문은 사용 불가능
+        {{ if (true) {return 100} }}    X, 분기 구문은 사용 불가능
+        -->
         {{ true ? 100 : 0 }}            <!-- O, 삼항 연산자로 표현 가능 -->
 
         <hr>
-        {{ message.split('').reverse().join('') }}      <!-- X, 복잡한 연산은 인스턴스 안에서 수행 -->
+        <!-- X, 복잡한 연산은 인스턴스 안에서 수행  //// 이라지만, 지금은 잘 실행된다. 바뀐 것 같다. -->
+        {{ message.split('').reverse().join('') }}
+        <hr>
         {{ reversedMessage  }}                          <!-- O, 스크립트에서 computed 속성으로 계산 후 최종 값만 표현 -->
     </div>
 
@@ -25,7 +29,7 @@
             /* computed : 데이터 속성을 자동으로 계산해 주는 속성
             *   해당 function() 에서는 data의 message를 가져와서 계산 했다. */
             computed: {
-                reversedMessage: function () {
+                reversedMessage: function() {
                     return this.message.split('').reverse().join('');
                 }
             }
